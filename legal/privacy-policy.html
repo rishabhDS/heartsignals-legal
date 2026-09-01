@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heart Signals Privacy Policy</title>
+  <style>
+    body { color: #24211f; font: 16px/1.6 system-ui, sans-serif; margin: 0 auto; max-width: 760px; padding: 32px 20px 64px; }
+    h1, h2, h3 { line-height: 1.25; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #d8d2cc; padding: 8px; text-align: left; vertical-align: top; }
+    code { background: #f2eee9; border-radius: 3px; padding: 1px 4px; }
+  </style>
+</head>
+<body>
+  <!-- Generated from docs/legal/privacy-policy.md by docs/store/tools/render_legal_html.py. Do not edit by hand. -->
+  <h1>Heart Signals Privacy Policy</h1>
+  <p><strong>Effective date:</strong> August 29, 2026<br> <strong>App:</strong> Heart Signals — relationship journal for iOS and Android</p>
+
+  <h2>Summary</h2>
+  <p>Heart Signals is a <strong>privacy-first, on-device journal</strong>. Your meetings, pulses, debriefs, and question notes are stored on your phone in a SQLCipher-encrypted database, and we do not operate a server that receives them.</p>
+  <p>The database file is excluded from Apple and Google device backups by default, and the key that opens it never leaves this device. If you turn on <strong>Settings &rarr; Backup &rarr; "Include in my encrypted iPhone backup"</strong>, the file is put into Apple's encrypted backup and the key travels with it, so a device restore brings the journal back — which also means Apple holds a copy that could be restored by anyone with access to that Apple ID. That switch is off unless you turn it on, and it is the only thing that puts your journal anywhere other than this phone.</p>
+
+  <h2>What we collect</h2>
+  <table>
+    <thead><tr><th>Data</th><th>Collected?</th><th>Where it stays</th></tr></thead>
+    <tbody>
+      <tr><td>Journal entries (people, meetings, pulses, notes)</td><td>Yes — you create it</td><td><strong>Your device only</strong> (encrypted), unless you turn on the iPhone-backup switch above</td></tr>
+      <tr><td>App lock / biometric preference</td><td>Yes</td><td>Your device only</td></tr>
+      <tr><td>Purchase status (subscription or lifetime)</td><td>Yes — via Apple/Google/RevenueCat</td><td>Billing providers; entitlement flag on device</td></tr>
+      <tr><td>Device and store identifiers sent to RevenueCat (vendor identifier, device model, OS version, locale, store country)</td><td>Yes — on every launch, whether or not you ever buy anything</td><td>RevenueCat</td></tr>
+      <tr><td>Diagnostics preference (on or off)</td><td>Yes</td><td>Your device only</td></tr>
+      <tr><td>Crash diagnostics (redacted error summary, Dart stack trace, app/device metadata)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Crashlytics</td></tr>
+      <tr><td>Feedback emails</td><td>Only if you choose to send one</td><td>Your email client &rarr; our support inbox</td></tr>
+      <tr><td>Analytics events (onboarding and purchase-funnel actions)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Analytics</td></tr>
+    </tbody>
+  </table>
+  <p>We <strong>never</strong> collect person names, pulse values, debrief text, or question answers — not for analytics, not for advertising, and not inside a crash report.</p>
+
+  <h3>How crash reports are redacted</h3>
+  <p>A crash report is not the error object. Before anything is transmitted, the error is reduced to a fixed set of fields:</p>
+  <ul>
+    <li>the error's type (for example <code>SqfliteDatabaseException</code>)</li>
+    <li>which operation was running, chosen from a fixed list in our code (for example <code>draft_save</code>)</li>
+    <li>an sqlite result code, where there is one (for example <code>787</code>)</li>
+    <li>a Dart stack trace, which is file, class and line numbers from our own code</li>
+  </ul>
+  <p>Error messages are <strong>not</strong> included. This matters because a database error message can otherwise carry the statement that failed along with the values bound to it — which, for a failed draft save, would be the text of your debrief. Nothing derived from an error message, and no widget or screen contents, reaches Crashlytics.</p>
+
+  <h3>Turning diagnostics off</h3>
+  <p><strong>Settings &rarr; Privacy &rarr; Share diagnostics.</strong> It is off by default. When on, crash reports and analytics events may be sent as described above. Switching it off stops crash reports and analytics events at once — including the native Crashlytics and Analytics collection — and the choice is stored on your device. With diagnostics off, your journal still stays on-device. Two things are not covered by this switch: subscription billing may still sync with Apple, Google, and RevenueCat to validate purchases, and the RevenueCat SDK still sends the device and store identifiers listed above at launch.</p>
+
+  <h2>How we use data</h2>
+  <ul>
+    <li>Run and protect your encrypted notebook on the device</li>
+    <li>Validate Active chapter / Lifetime keep purchases through the app stores</li>
+    <li>Diagnose crashes and understand aggregate onboarding and purchase-funnel performance</li>
+  </ul>
+
+  <h2>Third parties</h2>
+  <ul>
+    <li><strong>Apple App Store / Google Play</strong> — subscription and lifetime purchase processing</li>
+    <li><strong>RevenueCat</strong> — receipt validation and entitlement sync. The RevenueCat SDK starts when the app launches, not when you open a purchase screen, so it receives an anonymous install identifier together with your device's vendor identifier (IDFV), device model, OS version, locale and store country on every launch — including for people who never buy anything and never see a price. It receives no journal data.</li>
+    <li><strong>Google Firebase</strong> — redacted crash diagnostics and four funnel events, only while diagnostics are on; never journal content</li>
+    <li><strong>Email</strong> — if you contact support via mailto</li>
+  </ul>
+  <p>No third party receives your journal content, and this app does not upload your journal database anywhere. The one exception is the one you control: with <strong>"Include in my encrypted iPhone backup"</strong> turned on, iOS copies the database file into your Apple device backup. That is Apple storing it under your Apple ID, not us sending it — and it is off by default.</p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li><strong>Diagnostics:</strong> Settings &rarr; Privacy &rarr; Share diagnostics (off by default; when off, no crash or analytics data is sent)</li>
+    <li><strong>Export:</strong> Settings &rarr; Backup &rarr; Export encrypted backup (you control where the file goes). The copy is re-encrypted with a <strong>passphrase you choose</strong>, using SQLCipher's own key derivation. Your device key is not included in the export and is not needed to open it, so this is a real restore path: Settings &rarr; Backup &rarr; Restore from a backup will open the file on a different phone. The passphrase is therefore the only way in. Nobody holds a second copy of it — not us, not Apple, not Google — and there is no reset. <strong>If you lose the passphrase, that backup is permanently unreadable.</strong></li>
+    <li><strong>Backups on your iPhone:</strong> Settings &rarr; Backup &rarr; "Include in my encrypted iPhone backup" (off by default). See the Summary above for what turning it on changes.</li>
+    <li><strong>Delete:</strong> Settings &rarr; Delete all data (destroys the encryption key; irreversible)</li>
+    <li><strong>Subscriptions:</strong> Manage or cancel in iOS Settings or Google Play subscriptions</li>
+  </ul>
+
+  <h2>Children</h2>
+  <p>Heart Signals is intended for adults 18 and older. We do not knowingly collect data from anyone under 18.</p>
+
+  <h2>Changes</h2>
+  <p>We will update this policy when practices change. The effective date at the top will change accordingly.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about privacy: <strong><a href="mailto:support@heartsignals.app">support@heartsignals.app</a></strong>.</p>
+</body>
+</html>
