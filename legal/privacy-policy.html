@@ -15,20 +15,21 @@
 <body>
   <!-- Generated from docs/legal/privacy-policy.md by docs/store/tools/render_legal_html.py. Do not edit by hand. -->
   <h1>Heart Knows Privacy Policy</h1>
-  <p><strong>Effective date:</strong> September 1, 2026<br> <strong>App:</strong> Heart Knows — relationship journal for iOS and Android</p>
+  <p><strong>Effective date:</strong> September 4, 2026<br> <strong>App:</strong> Heart Knows — relationship journal for iOS and Android</p>
 
   <h2>Summary</h2>
   <p>Heart Knows is a <strong>privacy-first, on-device journal</strong>. Your meetings, pulses, debriefs, and question notes are stored on your phone in a SQLCipher-encrypted database, and we do not operate a server that receives them.</p>
-  <p>The database file is excluded from Apple and Google device backups by default, and the key that opens it never leaves this device. If you turn on <strong>Settings &rarr; Backup &rarr; "Include in my encrypted iPhone backup"</strong>, the file is put into Apple's encrypted backup and the key travels with it, so a device restore brings the journal back — which also means Apple holds a copy that could be restored by anyone with access to that Apple ID. That switch is off unless you turn it on, and it is the only thing that puts your journal anywhere other than this phone.</p>
+  <p>The database file is included in this phone’s backup unless you turn that off in <strong>Settings &rarr; Backup</strong>. On iPhone, that is Apple’s encrypted iCloud/Finder backup; the key that opens the journal travels with it. On Android, the live file cannot leave the chip, so the app keeps a separate encrypted snapshot that Google Auto Backup can restore onto a new phone. Either way, restoring the <strong>phone</strong> from backup brings the notebook back without a passphrase. That also means Apple or Google hold a copy that could be restored by anyone with access to that account. Turn the switch off if you do not want that.</p>
+  <p>A passphrase export is still available if you want a file only you can open.</p>
 
   <h2>What we collect</h2>
   <table>
     <thead><tr><th>Data</th><th>Collected?</th><th>Where it stays</th></tr></thead>
     <tbody>
-      <tr><td>Journal entries (people, meetings, pulses, notes)</td><td>Yes — you create it</td><td><strong>Your device only</strong> (encrypted), unless you turn on the iPhone-backup switch above</td></tr>
+      <tr><td>Journal entries (people, meetings, pulses, notes)</td><td>Yes — you create it</td><td><strong>Your device</strong> (encrypted). Also in this phone’s iCloud or Google backup unless you turn that off</td></tr>
       <tr><td>App lock / biometric preference</td><td>Yes</td><td>Your device only</td></tr>
       <tr><td>Purchase status (subscription or lifetime)</td><td>Yes — via Apple/Google/RevenueCat</td><td>Billing providers; entitlement flag on device</td></tr>
-      <tr><td>Device and store identifiers sent to RevenueCat (vendor identifier, device model, OS version, locale, store country)</td><td>Yes — on every launch, whether or not you ever buy anything</td><td>RevenueCat</td></tr>
+      <tr><td>Install and store details sent to RevenueCat (anonymous install identifier, device model, OS version, locale, store country)</td><td>Yes — on every launch, whether or not you ever buy anything</td><td>RevenueCat</td></tr>
       <tr><td>Diagnostics preference (on or off)</td><td>Yes</td><td>Your device only</td></tr>
       <tr><td>Crash diagnostics (redacted error summary, Dart stack trace, app/device metadata)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Crashlytics</td></tr>
       <tr><td>Feedback emails</td><td>Only if you choose to send one</td><td>Your email client &rarr; our support inbox</td></tr>
@@ -48,7 +49,7 @@
   <p>Error messages are <strong>not</strong> included. This matters because a database error message can otherwise carry the statement that failed along with the values bound to it — which, for a failed draft save, would be the text of your debrief. Nothing derived from an error message, and no widget or screen contents, reaches Crashlytics.</p>
 
   <h3>Turning diagnostics off</h3>
-  <p><strong>Settings &rarr; Privacy &rarr; Share diagnostics.</strong> It is off by default. When on, crash reports and analytics events may be sent as described above. Switching it off stops crash reports and analytics events at once — including the native Crashlytics and Analytics collection — and the choice is stored on your device. With diagnostics off, your journal still stays on-device. Two things are not covered by this switch: subscription billing may still sync with Apple, Google, and RevenueCat to validate purchases, and the RevenueCat SDK still sends the device and store identifiers listed above at launch.</p>
+  <p><strong>Settings &rarr; Privacy &rarr; Share diagnostics.</strong> It is off by default. When on, crash reports and analytics events may be sent as described above. Switching it off stops crash reports and analytics events at once — including the native Crashlytics and Analytics collection — and the choice is stored on your device. With diagnostics off, your journal still stays on-device. Two things are not covered by this switch: subscription billing may still sync with Apple, Google, and RevenueCat to validate purchases, and the RevenueCat SDK still sends the install and store details listed above at launch.</p>
 
   <h2>How we use data</h2>
   <ul>
@@ -60,17 +61,19 @@
   <h2>Third parties</h2>
   <ul>
     <li><strong>Apple App Store / Google Play</strong> — subscription and lifetime purchase processing</li>
-    <li><strong>RevenueCat</strong> — receipt validation and entitlement sync. The RevenueCat SDK starts when the app launches, not when you open a purchase screen, so it receives an anonymous install identifier together with your device's vendor identifier (IDFV), device model, OS version, locale and store country on every launch — including for people who never buy anything and never see a price. It receives no journal data.</li>
+    <li><strong>RevenueCat</strong> — receipt validation and entitlement sync. The RevenueCat SDK starts when the app launches, not when you open a purchase screen, so it receives an anonymous install identifier together with your device model, OS version, locale and store country on every launch — including for people who never buy anything and never see a price. We do not enable RevenueCat's device-identifier collection, so it does not receive your device's advertising identifier (IDFA) or vendor identifier (IDFV), and it receives no journal data.</li>
     <li><strong>Google Firebase</strong> — redacted crash diagnostics and four funnel events, only while diagnostics are on; never journal content</li>
     <li><strong>Email</strong> — if you contact support via mailto</li>
   </ul>
-  <p>No third party receives your journal content, and this app does not upload your journal database anywhere. The one exception is the one you control: with <strong>"Include in my encrypted iPhone backup"</strong> turned on, iOS copies the database file into your Apple device backup. That is Apple storing it under your Apple ID, not us sending it — and it is off by default.</p>
+  <p>No third party receives your journal content, and this app does not upload your journal database to our servers. Phone backup is the exception you control: <strong>Settings &rarr; Backup</strong> is on unless you turn it off. On iPhone, iOS copies the database into your Apple device backup. On Android, Google Auto Backup may hold an encrypted snapshot plus the secret that opens it. That is Apple or Google storing it under your account, not us sending it.</p>
 
   <h2>Your choices</h2>
   <ul>
     <li><strong>Diagnostics:</strong> Settings &rarr; Privacy &rarr; Share diagnostics (off by default; when off, no crash or analytics data is sent)</li>
-    <li><strong>Export:</strong> Settings &rarr; Backup &rarr; Export encrypted backup (you control where the file goes). The copy is re-encrypted with a <strong>passphrase you choose</strong>, using SQLCipher's own key derivation. Your device key is not included in the export and is not needed to open it, so this is a real restore path: Settings &rarr; Backup &rarr; Restore from a backup will open the file on a different phone. The passphrase is therefore the only way in. Nobody holds a second copy of it — not us, not Apple, not Google — and there is no reset. <strong>If you lose the passphrase, that backup is permanently unreadable.</strong></li>
-    <li><strong>Backups on your iPhone:</strong> Settings &rarr; Backup &rarr; "Include in my encrypted iPhone backup" (off by default). See the Summary above for what turning it on changes.</li>
+    <li><strong>App lock:</strong> Settings &rarr; Privacy. Off until you turn it on. When on, Face ID or your device passcode unlocks the app when it launches or returns from the background. There is no separate in-app PIN and no idle timeout.</li>
+    <li><strong>Phone backup:</strong> Settings &rarr; Backup &rarr; Back up with this phone (on by default). Restoring the phone from iCloud or Google brings the notebook back. Turn it off to keep the notebook only on this device. See the Summary.</li>
+    <li><strong>Export:</strong> Settings &rarr; Backup &rarr; Export encrypted backup (you control where the file goes). The copy is re-encrypted with a <strong>passphrase you choose</strong>, using SQLCipher's own key derivation. Your device key is not included in the export and is not needed to open it, so this is a real restore path: Settings &rarr; Backup &rarr; Restore from a backup, or <strong>Restore</strong> on the first intro screen, will open the file on a different phone. The passphrase is therefore the only way in. Nobody holds a second copy of it — not us, not Apple, not Google — and there is no reset. <strong>If you lose the passphrase, that backup is permanently unreadable.</strong></li>
+    <li><strong>Lost device key:</strong> If this phone can no longer open the on-device database (for example after a security reset that destroyed the keystore key), the app shows an unrecoverable screen. On Android, an automatic Google-backup snapshot is applied first when one is present. A passphrase file still cannot be opened from that screen. Restore while the app still opens, or restore the phone from backup.</li>
     <li><strong>Delete:</strong> Settings &rarr; Delete all data (destroys the encryption key; irreversible)</li>
     <li><strong>Subscriptions:</strong> Manage or cancel in iOS Settings or Google Play subscriptions</li>
   </ul>
