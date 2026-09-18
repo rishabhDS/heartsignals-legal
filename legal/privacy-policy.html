@@ -18,7 +18,7 @@
   <p><strong>Effective date:</strong> September 18, 2026<br> <strong>App:</strong> Heart Knows — relationship journal for iOS and Android</p>
 
   <h2>Summary</h2>
-  <p>Heart Knows is a <strong>privacy-first, on-device journal</strong>. Your meetings, pulses, debriefs, and question notes are stored on your phone in a SQLCipher-encrypted database, and we do not operate a server that receives them.</p>
+  <p>Heart Knows is a <strong>privacy-first, on-device journal</strong>. Your meetings, pulses, debriefs, and question notes are stored on your phone in a SQLCipher-encrypted database, and we do not operate a server that receives them. There is <strong>no account and nothing to sign in to</strong> — the app never asks for a name, email address, phone number or password, and the encrypted journal leaves the device only inside your own phone backup or an export you make yourself.</p>
   <p>The database file is included in this phone’s backup unless you turn that off in <strong>Settings &rarr; Backup</strong>. On iPhone, that is Apple’s encrypted iCloud/Finder backup; the key that opens the journal travels with it. On Android, the live file cannot leave the chip, so the app keeps a separate encrypted snapshot that Google Auto Backup can restore onto a new phone. Either way, restoring the <strong>phone</strong> from backup brings the notebook back without a passphrase. That also means Apple or Google hold a copy that could be restored by anyone with access to that account. Turn the switch off if you do not want that.</p>
   <p>A passphrase export is still available if you want a file only you can open.</p>
 
@@ -34,6 +34,10 @@
       <tr><td>Crash diagnostics (redacted error summary, Dart stack trace, app/device metadata)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Crashlytics</td></tr>
       <tr><td>Feedback emails</td><td>Only if you choose to send one</td><td>Your email client &rarr; our support inbox</td></tr>
       <tr><td>Analytics events (onboarding and purchase-funnel actions, plus Firebase default install, session, and engagement events)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Analytics</td></tr>
+      <tr><td>Session and installation records (random Firebase installation ID, bundle ID, OS and SDK version, network type, time in foreground)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase (Installations, Sessions)</td></tr>
+      <tr><td>Voice dictation audio and transcript</td><td><strong>Not collected.</strong> Recognised on this device only when you tap the dictate button; the audio is never stored or uploaded, and the text lands in your encrypted journal</td><td>Your device only</td></tr>
+      <tr><td>Face ID / passcode</td><td><strong>Not collected.</strong> iOS performs the check and tells the app only whether unlock succeeded</td><td>Your device only</td></tr>
+      <tr><td>Check-in reminders</td><td>Scheduled and shown by this phone; nothing is sent to a push server</td><td>Your device only</td></tr>
     </tbody>
   </table>
   <p>We <strong>never</strong> collect person names, pulse values, debrief text, or question answers — not for analytics, not for advertising, and not inside a crash report.</p>
@@ -48,8 +52,28 @@
   </ul>
   <p>Error messages are <strong>not</strong> included. This matters because a database error message can otherwise carry the statement that failed along with the values bound to it — which, for a failed draft save, would be the text of your debrief. Nothing derived from an error message, and no widget or screen contents, reaches Crashlytics.</p>
 
+  <h3>Dictation, Face ID and reminders</h3>
+  <ul>
+    <li><strong>Dictation (microphone and speech recognition).</strong> Typing is the default; dictation is offered as a button. The first time you tap it, iOS or Android asks for microphone and speech-recognition permission — the app never asks at launch. Recognition is forced to run <strong>on the device</strong> (on iOS, <code>requiresOnDeviceRecognition</code>); if the phone cannot recognise speech locally, dictation is simply unavailable and you keep typing. There is no cloud fallback, so the recording of your voice is never uploaded to us, to Apple, or to Google by the app, and no audio is kept once the words appear in the text field. The transcript is ordinary journal text and is protected the same way.</li>
+    <li><strong>App lock (Face ID, Touch ID or passcode).</strong> Off until you turn it on. The check is done by the operating system, which returns only pass or fail; the app never sees, stores or transmits biometric data.</li>
+    <li><strong>Check-in reminders.</strong> Optional local notifications scheduled on the phone. There is no remote push service, and no reminder is sent through a server.</li>
+  </ul>
+
   <h3>Turning diagnostics off</h3>
   <p><strong>Settings &rarr; Privacy and lock &rarr; Share diagnostics.</strong> It is <strong>on</strong> by default in release builds. Crash reports and analytics events may be sent as described above. Switching it <strong>off</strong> stops crash reports and analytics events at once — including the native Crashlytics and Analytics collection — and the choice is stored on your device. Journal content is never included. Two things are not covered by this switch: subscription billing may still sync with Apple, Google, and RevenueCat to validate purchases, and the RevenueCat SDK still sends the install and store details listed above at launch.</p>
+
+  <h2>Identifiers</h2>
+  <p>The app has no user ID. The only identifiers involved are random, per-install values generated by the SDKs themselves: RevenueCat's anonymous app user ID, the Firebase installation ID and Google Analytics app-instance ID, and Crashlytics' installation UUID. None of them is derived from your name, email, phone number, Apple ID or Google account, none is the advertising identifier (IDFA) or vendor identifier (IDFV), and we do not join them to any other data set. We do not use them, or anything else, to track you across other companies' apps or websites, and the app has no App Tracking Transparency prompt because it does no tracking.</p>
+
+  <h2>How long data is kept</h2>
+  <ul>
+    <li><strong>Journal:</strong> on your device until you delete it (Settings &rarr; Delete all data), plus whatever your own phone backups or exports hold.</li>
+    <li><strong>Crash reports:</strong> Firebase Crashlytics keeps crash stack traces and the associated installation identifiers for <strong>90 days</strong>, then begins deleting them.</li>
+    <li><strong>Analytics events:</strong> kept under Google Analytics' data-retention setting for our Firebase project, which we leave at the default (user-level event data for two months; aggregate reports longer). Turning diagnostics off stops new events immediately.</li>
+    <li><strong>Firebase installation ID:</strong> retained until we ask Firebase to delete it, after which it is removed within 180 days. Email us to trigger that.</li>
+    <li><strong>Purchase records:</strong> RevenueCat and the app store keep the anonymous purchase record for as long as it is needed to honour your subscription or lifetime purchase, and afterwards as their own policies require. There is nothing in it but the store transaction and the anonymous install identifier.</li>
+    <li><strong>Feedback email:</strong> kept in our support inbox until the conversation is resolved, then deleted on request.</li>
+  </ul>
 
   <h2>How we use data</h2>
   <ul>
@@ -65,7 +89,7 @@
     <li><strong>Google Firebase</strong> — redacted crash diagnostics and four custom funnel events (onboarding complete, paywall shown, purchase started, purchase completed), only while diagnostics are on. Automatic screen-view reporting is off. Firebase may still record default install and session events while diagnostics are on. Never journal content</li>
     <li><strong>Email</strong> — if you contact support via mailto</li>
   </ul>
-  <p>No third party receives your journal content, and this app does not upload your journal database to our servers. Phone backup is the exception you control: <strong>Settings &rarr; Backup</strong> is on unless you turn it off. On iPhone, iOS copies the database into your Apple device backup. On Android, Google Auto Backup may hold an encrypted snapshot plus the secret that opens it. That is Apple or Google storing it under your account, not us sending it.</p>
+  <p>No third party receives your journal content, and this app does not upload your journal database to our servers. Apple's Face ID and on-device speech recognition run inside iOS on your phone; the app does not send anything to Apple for either feature. Phone backup is the exception you control: <strong>Settings &rarr; Backup</strong> is on unless you turn it off. On iPhone, iOS copies the database into your Apple device backup. On Android, Google Auto Backup may hold an encrypted snapshot plus the secret that opens it. That is Apple or Google storing it under your account, not us sending it.</p>
 
   <h2>Your choices</h2>
   <ul>
@@ -77,6 +101,9 @@
     <li><strong>Delete:</strong> Settings &rarr; Delete all data destroys the journal and its encryption key on this device. It does not cancel a store subscription — manage or cancel that in iOS Settings or Google Play. RevenueCat and Firebase may keep anonymous install, purchase, and diagnostic records. Email <strong><a href="mailto:132.rishabh@gmail.com">132.rishabh@gmail.com</a></strong> to request deletion of those vendor records; there is no Heart Knows account to delete.</li>
     <li><strong>Subscriptions:</strong> Manage or cancel in iOS Settings or Google Play subscriptions</li>
   </ul>
+
+  <h2>App Store privacy label</h2>
+  <p>For readers comparing this policy with the App Store "App Privacy" section: the label declares <strong>Crash Data</strong>, <strong>Other Diagnostic Data</strong>, <strong>Product Interaction</strong> and <strong>Purchase History</strong> — all <em>not linked to you</em> and <em>not used for tracking</em> — and nothing else. Voice dictation, Face ID and reminders appear nowhere on it because none of them collects data from the device. Journal content is not declared because it is never collected.</p>
 
   <h2>Children</h2>
   <p>Heart Knows is intended for adults 18 and older. We do not knowingly collect data from anyone under 18.</p>
