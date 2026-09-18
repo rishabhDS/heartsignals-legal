@@ -15,7 +15,7 @@
 <body>
   <!-- Generated from docs/legal/privacy-policy.md by docs/store/tools/render_legal_html.py. Do not edit by hand. -->
   <h1>Heart Knows Privacy Policy</h1>
-  <p><strong>Effective date:</strong> September 8, 2026<br> <strong>App:</strong> Heart Knows — relationship journal for iOS and Android</p>
+  <p><strong>Effective date:</strong> September 18, 2026<br> <strong>App:</strong> Heart Knows — relationship journal for iOS and Android</p>
 
   <h2>Summary</h2>
   <p>Heart Knows is a <strong>privacy-first, on-device journal</strong>. Your meetings, pulses, debriefs, and question notes are stored on your phone in a SQLCipher-encrypted database, and we do not operate a server that receives them.</p>
@@ -33,7 +33,7 @@
       <tr><td>Diagnostics preference (on or off)</td><td>Yes</td><td>Your device only</td></tr>
       <tr><td>Crash diagnostics (redacted error summary, Dart stack trace, app/device metadata)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Crashlytics</td></tr>
       <tr><td>Feedback emails</td><td>Only if you choose to send one</td><td>Your email client &rarr; our support inbox</td></tr>
-      <tr><td>Analytics events (onboarding and purchase-funnel actions)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Analytics</td></tr>
+      <tr><td>Analytics events (onboarding and purchase-funnel actions, plus Firebase default install, session, and engagement events)</td><td>In release builds when Firebase is configured <strong>and</strong> diagnostics are on</td><td>Firebase Analytics</td></tr>
     </tbody>
   </table>
   <p>We <strong>never</strong> collect person names, pulse values, debrief text, or question answers — not for analytics, not for advertising, and not inside a crash report.</p>
@@ -74,7 +74,7 @@
     <li><strong>Phone backup:</strong> Settings &rarr; Backup &rarr; Back up with this phone (on by default). Restoring the phone from iCloud or Google brings the notebook back. Turn it off to keep the notebook only on this device. See the Summary.</li>
     <li><strong>Export:</strong> Settings &rarr; Backup &rarr; Export encrypted backup (you control where the file goes). The copy is re-encrypted with a <strong>passphrase you choose</strong>, using SQLCipher's own key derivation. Your device key is not included in the export and is not needed to open it, so this is a real restore path: Settings &rarr; Backup &rarr; Restore from a backup, or <strong>Restore</strong> on the first intro screen, will open the file on a different phone. The passphrase is therefore the only way in. Nobody holds a second copy of it — not us, not Apple, not Google — and there is no reset. <strong>If you lose the passphrase, that backup is permanently unreadable.</strong></li>
     <li><strong>Lost device key:</strong> If this phone can no longer open the on-device database (for example after a security reset that destroyed the keystore key), the app shows an unrecoverable screen. On Android, an automatic Google-backup snapshot is applied first when one is present. A passphrase file still cannot be opened from that screen. Restore while the app still opens, or restore the phone from backup.</li>
-    <li><strong>Delete:</strong> Settings &rarr; Delete all data (destroys the encryption key; irreversible)</li>
+    <li><strong>Delete:</strong> Settings &rarr; Delete all data destroys the journal and its encryption key on this device. It does not cancel a store subscription — manage or cancel that in iOS Settings or Google Play. RevenueCat and Firebase may keep anonymous install, purchase, and diagnostic records. Email <strong><a href="mailto:132.rishabh@gmail.com">132.rishabh@gmail.com</a></strong> to request deletion of those vendor records; there is no Heart Knows account to delete.</li>
     <li><strong>Subscriptions:</strong> Manage or cancel in iOS Settings or Google Play subscriptions</li>
   </ul>
 
